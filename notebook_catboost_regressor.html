@@ -1,0 +1,715 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Catboost regression &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"2900484c4be644e7a8c438684882be05": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": "stretch", "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "500px", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "971adb6390394c6598b756749439683b": {"model_name": "CatboostWidgetModel", "model_module": "catboost-widget", "model_module_version": "^1.0.0", "state": {"_dom_classes": [], "_model_module": "catboost-widget", "_model_module_version": "^1.0.0", "_model_name": "CatboostWidgetModel", "_view_count": null, "_view_module": "catboost-widget", "_view_module_version": "^1.0.0", "_view_name": "CatboostWidgetView", "data": {"catboost_info": {"path": "catboost_info", "name": "catboost_info", "content": {"passed_iterations": 499, "total_iterations": 500, "data": {"iterations": [{"learn": [9.038875476], "iteration": 0, "passed_time": 0.1383723569, "remaining_time": 69.04780609}, {"learn": [8.769726976], "iteration": 1, "passed_time": 0.1403530446, "remaining_time": 34.94790811}, {"learn": [8.528390444], "iteration": 2, "passed_time": 0.1419300693, "remaining_time": 23.51308148}, {"learn": [8.294776938], "iteration": 3, "passed_time": 0.1433089743, "remaining_time": 17.77031281}, {"learn": [8.071538946], "iteration": 4, "passed_time": 0.1445322116, "remaining_time": 14.30868895}, {"learn": [7.856649501], "iteration": 5, "passed_time": 0.1456210308, "remaining_time": 11.98946487}, {"learn": [7.666425416], "iteration": 6, "passed_time": 0.146651852, "remaining_time": 10.32848043}, {"learn": [7.479782885], "iteration": 7, "passed_time": 0.1477472615, "remaining_time": 9.086456582}, {"learn": [7.312859621], "iteration": 8, "passed_time": 0.1486050392, "remaining_time": 8.107230473}, {"learn": [7.153703832], "iteration": 9, "passed_time": 0.1493449945, "remaining_time": 7.317904729}, {"learn": [7.013626817], "iteration": 10, "passed_time": 0.1500201977, "remaining_time": 6.669079699}, {"learn": [6.879492642], "iteration": 11, "passed_time": 0.1505967299, "remaining_time": 6.124267016}, {"learn": [6.757790769], "iteration": 12, "passed_time": 0.1509439199, "remaining_time": 5.654591462}, {"learn": [6.642887465], "iteration": 13, "passed_time": 0.1514405977, "remaining_time": 5.257152177}, {"learn": [6.530510832], "iteration": 14, "passed_time": 0.1519465395, "remaining_time": 4.912938111}, {"learn": [6.420758567], "iteration": 15, "passed_time": 0.1524470373, "remaining_time": 4.611522877}, {"learn": [6.326610395], "iteration": 16, "passed_time": 0.1529454665, "remaining_time": 4.345450606}, {"learn": [6.237545025], "iteration": 17, "passed_time": 0.1534340945, "remaining_time": 4.108624086}, {"learn": [6.15298059], "iteration": 18, "passed_time": 0.1539043684, "remaining_time": 3.89621059}, {"learn": [6.075535129], "iteration": 19, "passed_time": 0.1544013954, "remaining_time": 3.70563349}, {"learn": [6.003357555], "iteration": 20, "passed_time": 0.1548939519, "remaining_time": 3.533057283}, {"learn": [5.938490239], "iteration": 21, "passed_time": 0.1553883269, "remaining_time": 3.376164558}, {"learn": [5.879890613], "iteration": 22, "passed_time": 0.1558615853, "remaining_time": 3.232433747}, {"learn": [5.82492501], "iteration": 23, "passed_time": 0.1563503545, "remaining_time": 3.100948698}, {"learn": [5.778524769], "iteration": 24, "passed_time": 0.1568469072, "remaining_time": 2.980091237}, {"learn": [5.731984604], "iteration": 25, "passed_time": 0.1573441153, "remaining_time": 2.868504255}, {"learn": [5.688427943], "iteration": 26, "passed_time": 0.1578485144, "remaining_time": 2.765272122}, {"learn": [5.645260223], "iteration": 27, "passed_time": 0.1583569811, "remaining_time": 2.669446253}, {"learn": [5.605155514], "iteration": 28, "passed_time": 0.1588545297, "remaining_time": 2.580016673}, {"learn": [5.577755662], "iteration": 29, "passed_time": 0.1593397816, "remaining_time": 2.496323245}, {"learn": [5.54241589], "iteration": 30, "passed_time": 0.1598442894, "remaining_time": 2.418289411}, {"learn": [5.509868576], "iteration": 31, "passed_time": 0.1603197913, "remaining_time": 2.344676947}, {"learn": [5.481629999], "iteration": 32, "passed_time": 0.1608160786, "remaining_time": 2.275791173}, {"learn": [5.456874223], "iteration": 33, "passed_time": 0.161302037, "remaining_time": 2.210786743}, {"learn": [5.431794795], "iteration": 34, "passed_time": 0.1617799721, "remaining_time": 2.149362487}, {"learn": [5.414178017], "iteration": 35, "passed_time": 0.1627068895, "remaining_time": 2.09711102}, {"learn": [5.394161258], "iteration": 36, "passed_time": 0.1632142837, "remaining_time": 2.042384144}, {"learn": [5.375839857], "iteration": 37, "passed_time": 0.1636934283, "remaining_time": 1.990167471}, {"learn": [5.356225705], "iteration": 38, "passed_time": 0.1641945255, "remaining_time": 1.940863494}, {"learn": [5.342650318], "iteration": 39, "passed_time": 0.1648981182, "remaining_time": 1.896328359}, {"learn": [5.324454905], "iteration": 40, "passed_time": 0.1654542972, "remaining_time": 1.852281034}, {"learn": [5.308340536], "iteration": 41, "passed_time": 0.1659733259, "remaining_time": 1.809899602}, {"learn": [5.294324308], "iteration": 42, "passed_time": 0.1666561293, "remaining_time": 1.771205839}, {"learn": [5.281757854], "iteration": 43, "passed_time": 0.1671663063, "remaining_time": 1.732450811}, {"learn": [5.270110522], "iteration": 44, "passed_time": 0.1676643721, "remaining_time": 1.695273095}, {"learn": [5.260610687], "iteration": 45, "passed_time": 0.1683281427, "remaining_time": 1.661325582}, {"learn": [5.248605044], "iteration": 46, "passed_time": 0.1688543011, "remaining_time": 1.627468051}, {"learn": [5.240874665], "iteration": 47, "passed_time": 0.1693785909, "remaining_time": 1.594981731}, {"learn": [5.234526562], "iteration": 48, "passed_time": 0.1699195424, "remaining_time": 1.563953339}, {"learn": [5.226882953], "iteration": 49, "passed_time": 0.1704529966, "remaining_time": 1.534076969}, {"learn": [5.220624436], "iteration": 50, "passed_time": 0.170955825, "remaining_time": 1.505081675}, {"learn": [5.214587838], "iteration": 51, "passed_time": 0.171446281, "remaining_time": 1.477075652}, {"learn": [5.207170763], "iteration": 52, "passed_time": 0.1719498694, "remaining_time": 1.45021871}, {"learn": [5.202029318], "iteration": 53, "passed_time": 0.1724688049, "remaining_time": 1.424464574}, {"learn": [5.195483211], "iteration": 54, "passed_time": 0.1731218407, "remaining_time": 1.400713075}, {"learn": [5.190410928], "iteration": 55, "passed_time": 0.1736499609, "remaining_time": 1.376796118}, {"learn": [5.185200955], "iteration": 56, "passed_time": 0.1741690521, "remaining_time": 1.35362965}, {"learn": [5.180579194], "iteration": 57, "passed_time": 0.1746851944, "remaining_time": 1.331221654}, {"learn": [5.176162168], "iteration": 58, "passed_time": 0.1753362792, "remaining_time": 1.310564392}, {"learn": [5.171997435], "iteration": 59, "passed_time": 0.1758404033, "remaining_time": 1.289496291}, {"learn": [5.166666148], "iteration": 60, "passed_time": 0.1763374615, "remaining_time": 1.269051567}, {"learn": [5.163869449], "iteration": 61, "passed_time": 0.1771108991, "remaining_time": 1.251202803}, {"learn": [5.160668883], "iteration": 62, "passed_time": 0.1776492944, "remaining_time": 1.23226574}, {"learn": [5.157652834], "iteration": 63, "passed_time": 0.1781683836, "remaining_time": 1.213772113}, {"learn": [5.155298732], "iteration": 64, "passed_time": 0.1787057235, "remaining_time": 1.195953688}, {"learn": [5.151596359], "iteration": 65, "passed_time": 0.1792100303, "remaining_time": 1.178441714}, {"learn": [5.149481745], "iteration": 66, "passed_time": 0.1797017991, "remaining_time": 1.161356403}, {"learn": [5.146213837], "iteration": 67, "passed_time": 0.1801954962, "remaining_time": 1.144771388}, {"learn": [5.142151031], "iteration": 68, "passed_time": 0.1808519465, "remaining_time": 1.129669405}, {"learn": [5.139604648], "iteration": 69, "passed_time": 0.1813556314, "remaining_time": 1.114041735}, {"learn": [5.136854852], "iteration": 70, "passed_time": 0.1818604009, "remaining_time": 1.098846648}, {"learn": [5.135444115], "iteration": 71, "passed_time": 0.1825525751, "remaining_time": 1.085173641}, {"learn": [5.13339067], "iteration": 72, "passed_time": 0.1830995643, "remaining_time": 1.071007041}, {"learn": [5.128516571], "iteration": 73, "passed_time": 0.1836143097, "remaining_time": 1.057022918}, {"learn": [5.127061635], "iteration": 74, "passed_time": 0.1841571508, "remaining_time": 1.043557188}, {"learn": [5.124022329], "iteration": 75, "passed_time": 0.1846752923, "remaining_time": 1.030293736}, {"learn": [5.123001753], "iteration": 76, "passed_time": 0.1851989821, "remaining_time": 1.017391811}, {"learn": [5.119435606], "iteration": 77, "passed_time": 0.1858997405, "remaining_time": 1.005765262}, {"learn": [5.114520273], "iteration": 78, "passed_time": 0.1864569164, "remaining_time": 0.9936501494}, {"learn": [5.113107936], "iteration": 79, "passed_time": 0.1869829522, "remaining_time": 0.9816604992}, {"learn": [5.111142151], "iteration": 80, "passed_time": 0.1876652999, "remaining_time": 0.9707624771}, {"learn": [5.109309863], "iteration": 81, "passed_time": 0.1881645787, "remaining_time": 0.9591804136}, {"learn": [5.107289703], "iteration": 82, "passed_time": 0.1886832544, "remaining_time": 0.9479628564}, {"learn": [5.105099061], "iteration": 83, "passed_time": 0.1892264786, "remaining_time": 0.9371216082}, {"learn": [5.104519936], "iteration": 84, "passed_time": 0.1897304889, "remaining_time": 0.9263312104}, {"learn": [5.103632545], "iteration": 85, "passed_time": 0.1902464454, "remaining_time": 0.9158375394}, {"learn": [5.102138522], "iteration": 86, "passed_time": 0.1907570774, "remaining_time": 0.9055479654}, {"learn": [5.099981269], "iteration": 87, "passed_time": 0.1914433046, "remaining_time": 0.8963027441}, {"learn": [5.098924411], "iteration": 88, "passed_time": 0.1919914557, "remaining_time": 0.886612228}, {"learn": [5.097811471], "iteration": 89, "passed_time": 0.1925955675, "remaining_time": 0.8773798076}, {"learn": [5.096794778], "iteration": 90, "passed_time": 0.1931155035, "remaining_time": 0.8679586918}, {"learn": [5.09478364], "iteration": 91, "passed_time": 0.193639932, "remaining_time": 0.8587510029}, {"learn": [5.091746216], "iteration": 92, "passed_time": 0.1941572129, "remaining_time": 0.8496987704}, {"learn": [5.090104999], "iteration": 93, "passed_time": 0.1947165317, "remaining_time": 0.8410097005}, {"learn": [5.088633833], "iteration": 94, "passed_time": 0.195354249, "remaining_time": 0.8328260087}, {"learn": [5.087458556], "iteration": 95, "passed_time": 0.1959386443, "remaining_time": 0.8245751282}, {"learn": [5.086980911], "iteration": 96, "passed_time": 0.1966164165, "remaining_time": 0.8168702666}, {"learn": [5.084087813], "iteration": 97, "passed_time": 0.1971846649, "remaining_time": 0.8088595438}, {"learn": [5.082823095], "iteration": 98, "passed_time": 0.197706034, "remaining_time": 0.8008092891}, {"learn": [5.081232334], "iteration": 99, "passed_time": 0.1982179399, "remaining_time": 0.7928717597}, {"learn": [5.079644419], "iteration": 100, "passed_time": 0.198825435, "remaining_time": 0.7854588966}, {"learn": [5.079242535], "iteration": 101, "passed_time": 0.1990425662, "remaining_time": 0.7766562879}, {"learn": [5.076270727], "iteration": 102, "passed_time": 0.1995791272, "remaining_time": 0.7692515872}, {"learn": [5.074118058], "iteration": 103, "passed_time": 0.2001074496, "remaining_time": 0.7619475965}, {"learn": [5.072525143], "iteration": 104, "passed_time": 0.2007162131, "remaining_time": 0.7550752777}, {"learn": [5.070121529], "iteration": 105, "passed_time": 0.2012424914, "remaining_time": 0.7480145435}, {"learn": [5.069196037], "iteration": 106, "passed_time": 0.2018443948, "remaining_time": 0.7413537117}, {"learn": [5.067068237], "iteration": 107, "passed_time": 0.2023539916, "remaining_time": 0.7344700436}, {"learn": [5.066816377], "iteration": 108, "passed_time": 0.2024602296, "remaining_time": 0.7262564201}, {"learn": [5.065079845], "iteration": 109, "passed_time": 0.2029645792, "remaining_time": 0.7196016899}, {"learn": [5.063949295], "iteration": 110, "passed_time": 0.2034548227, "remaining_time": 0.7130083425}, {"learn": [5.062069011], "iteration": 111, "passed_time": 0.2039354528, "remaining_time": 0.7064906758}, {"learn": [5.060071522], "iteration": 112, "passed_time": 0.2045374877, "remaining_time": 0.7004956438}, {"learn": [5.058669174], "iteration": 113, "passed_time": 0.2050369965, "remaining_time": 0.694248076}, {"learn": [5.057194588], "iteration": 114, "passed_time": 0.2056217884, "remaining_time": 0.6883859874}, {"learn": [5.055657877], "iteration": 115, "passed_time": 0.206265814, "remaining_time": 0.6828109704}, {"learn": [5.05446926], "iteration": 116, "passed_time": 0.206965021, "remaining_time": 0.6775008806}, {"learn": [5.053216499], "iteration": 117, "passed_time": 0.2075382924, "remaining_time": 0.6718612518}, {"learn": [5.050952225], "iteration": 118, "passed_time": 0.2081261283, "remaining_time": 0.6663534024}, {"learn": [5.049038137], "iteration": 119, "passed_time": 0.2088031013, "remaining_time": 0.6612098209}, {"learn": [5.048515677], "iteration": 120, "passed_time": 0.2094025949, "remaining_time": 0.6558973841}, {"learn": [5.045368389], "iteration": 121, "passed_time": 0.210088174, "remaining_time": 0.6509289327}, {"learn": [5.043516158], "iteration": 122, "passed_time": 0.2106295323, "remaining_time": 0.6455880786}, {"learn": [5.039660696], "iteration": 123, "passed_time": 0.2111686178, "remaining_time": 0.6403177442}, {"learn": [5.0379957], "iteration": 124, "passed_time": 0.2117885052, "remaining_time": 0.6353655155}, {"learn": [5.036079861], "iteration": 125, "passed_time": 0.2123007636, "remaining_time": 0.6301625839}, {"learn": [5.034670751], "iteration": 126, "passed_time": 0.21291608, "remaining_time": 0.6253362035}, {"learn": [5.033642375], "iteration": 127, "passed_time": 0.2134255588, "remaining_time": 0.6202680303}, {"learn": [5.030982795], "iteration": 128, "passed_time": 0.2140194479, "remaining_time": 0.6155132958}, {"learn": [5.029210015], "iteration": 129, "passed_time": 0.2145359958, "remaining_time": 0.6106024496}, {"learn": [5.028012812], "iteration": 130, "passed_time": 0.2151328423, "remaining_time": 0.6059848764}, {"learn": [5.024994426], "iteration": 131, "passed_time": 0.2156437056, "remaining_time": 0.6011885126}, {"learn": [5.024137079], "iteration": 132, "passed_time": 0.2161470164, "remaining_time": 0.596435752}, {"learn": [5.022240807], "iteration": 133, "passed_time": 0.2167426537, "remaining_time": 0.5919985914}, {"learn": [5.020662497], "iteration": 134, "passed_time": 0.2172557496, "remaining_time": 0.5873951747}, {"learn": [5.018832286], "iteration": 135, "passed_time": 0.2178511283, "remaining_time": 0.5830721374}, {"learn": [5.017901232], "iteration": 136, "passed_time": 0.2183342441, "remaining_time": 0.5785060627}, {"learn": [5.014721401], "iteration": 137, "passed_time": 0.2189563878, "remaining_time": 0.5743638578}, {"learn": [5.01336584], "iteration": 138, "passed_time": 0.219463515, "remaining_time": 0.5699735894}, {"learn": [5.010814608], "iteration": 139, "passed_time": 0.2200640835, "remaining_time": 0.5658790717}, {"learn": [5.008586697], "iteration": 140, "passed_time": 0.2206419648, "remaining_time": 0.56177635}, {"learn": [5.007373578], "iteration": 141, "passed_time": 0.2213552486, "remaining_time": 0.5580646408}, {"learn": [5.006160429], "iteration": 142, "passed_time": 0.2220294954, "remaining_time": 0.5542974116}, {"learn": [5.004578643], "iteration": 143, "passed_time": 0.222626586, "remaining_time": 0.5503823932}, {"learn": [5.002762236], "iteration": 144, "passed_time": 0.2233006572, "remaining_time": 0.5467016091}, {"learn": [5.00256675], "iteration": 145, "passed_time": 0.2234429269, "remaining_time": 0.5417725762}, {"learn": [5.001102011], "iteration": 146, "passed_time": 0.224075496, "remaining_time": 0.5380860551}, {"learn": [4.999811146], "iteration": 147, "passed_time": 0.2246585908, "remaining_time": 0.5343231349}, {"learn": [4.998715228], "iteration": 148, "passed_time": 0.2253161645, "remaining_time": 0.5307783472}, {"learn": [4.99564361], "iteration": 149, "passed_time": 0.225908615, "remaining_time": 0.5271201017}, {"learn": [4.993705447], "iteration": 150, "passed_time": 0.2265468559, "remaining_time": 0.5236082961}, {"learn": [4.991481149], "iteration": 151, "passed_time": 0.2272046563, "remaining_time": 0.5201790815}, {"learn": [4.989999816], "iteration": 152, "passed_time": 0.2277752179, "remaining_time": 0.5165882394}, {"learn": [4.986307066], "iteration": 153, "passed_time": 0.2284429176, "remaining_time": 0.5132548668}, {"learn": [4.983091285], "iteration": 154, "passed_time": 0.2290366159, "remaining_time": 0.5097911774}, {"learn": [4.981946784], "iteration": 155, "passed_time": 0.229683578, "remaining_time": 0.5064817361}, {"learn": [4.980839798], "iteration": 156, "passed_time": 0.230332334, "remaining_time": 0.503210131}, {"learn": [4.979263534], "iteration": 157, "passed_time": 0.230925091, "remaining_time": 0.4998505135}, {"learn": [4.977811375], "iteration": 158, "passed_time": 0.231553661, "remaining_time": 0.4966025057}, {"learn": [4.975672446], "iteration": 159, "passed_time": 0.2321148103, "remaining_time": 0.4932439719}, {"learn": [4.973670724], "iteration": 160, "passed_time": 0.2327421878, "remaining_time": 0.4900596377}, {"learn": [4.971619387], "iteration": 161, "passed_time": 0.2333992742, "remaining_time": 0.4869688561}, {"learn": [4.967864987], "iteration": 162, "passed_time": 0.2339908651, "remaining_time": 0.4837725248}, {"learn": [4.96635946], "iteration": 163, "passed_time": 0.2346133967, "remaining_time": 0.4806713494}, {"learn": [4.965301322], "iteration": 164, "passed_time": 0.2351851734, "remaining_time": 0.4774971702}, {"learn": [4.963889034], "iteration": 165, "passed_time": 0.2358627182, "remaining_time": 0.4745671559}, {"learn": [4.959034509], "iteration": 166, "passed_time": 0.2364437519, "remaining_time": 0.4714716729}, {"learn": [4.95517151], "iteration": 167, "passed_time": 0.2370969225, "remaining_time": 0.4685486801}, {"learn": [4.952185468], "iteration": 168, "passed_time": 0.237803397, "remaining_time": 0.4657569492}, {"learn": [4.950969173], "iteration": 169, "passed_time": 0.2384451604, "remaining_time": 0.4628641349}, {"learn": [4.948426549], "iteration": 170, "passed_time": 0.2391097878, "remaining_time": 0.4600416385}, {"learn": [4.945455735], "iteration": 171, "passed_time": 0.2398075103, "remaining_time": 0.4573073451}, {"learn": [4.944674507], "iteration": 172, "passed_time": 0.2401954804, "remaining_time": 0.4540111103}, {"learn": [4.942503487], "iteration": 173, "passed_time": 0.2408650173, "remaining_time": 0.4512758371}, {"learn": [4.939080294], "iteration": 174, "passed_time": 0.2415172463, "remaining_time": 0.4485320288}, {"learn": [4.938275838], "iteration": 175, "passed_time": 0.2420912002, "remaining_time": 0.4456678913}, {"learn": [4.93561691], "iteration": 176, "passed_time": 0.2427497432, "remaining_time": 0.4429839946}, {"learn": [4.93354889], "iteration": 177, "passed_time": 0.2433462691, "remaining_time": 0.4402106665}, {"learn": [4.932731309], "iteration": 178, "passed_time": 0.2440040177, "remaining_time": 0.4375714507}, {"learn": [4.931130333], "iteration": 179, "passed_time": 0.2446327028, "remaining_time": 0.4349025827}, {"learn": [4.930193291], "iteration": 180, "passed_time": 0.2452143478, "remaining_time": 0.4321733533}, {"learn": [4.929232615], "iteration": 181, "passed_time": 0.2458295658, "remaining_time": 0.4295263843}, {"learn": [4.927981159], "iteration": 182, "passed_time": 0.246417194, "remaining_time": 0.4268538278}, {"learn": [4.926789597], "iteration": 183, "passed_time": 0.2470745583, "remaining_time": 0.4243236979}, {"learn": [4.923393848], "iteration": 184, "passed_time": 0.2477319869, "remaining_time": 0.4218139236}, {"learn": [4.922268915], "iteration": 185, "passed_time": 0.2483172631, "remaining_time": 0.4192022614}, {"learn": [4.921302355], "iteration": 186, "passed_time": 0.2489638615, "remaining_time": 0.4167149125}, {"learn": [4.918963926], "iteration": 187, "passed_time": 0.2496192216, "remaining_time": 0.4142616868}, {"learn": [4.917273496], "iteration": 188, "passed_time": 0.2502791677, "remaining_time": 0.4118350325}, {"learn": [4.915547736], "iteration": 189, "passed_time": 0.250944583, "remaining_time": 0.4094358985}, {"learn": [4.91452196], "iteration": 190, "passed_time": 0.2515068984, "remaining_time": 0.4068881236}, {"learn": [4.913406919], "iteration": 191, "passed_time": 0.2521403121, "remaining_time": 0.4044750839}, {"learn": [4.911902071], "iteration": 192, "passed_time": 0.2527126052, "remaining_time": 0.4019832632}, {"learn": [4.908979406], "iteration": 193, "passed_time": 0.2532779119, "remaining_time": 0.3995002115}, {"learn": [4.907775801], "iteration": 194, "passed_time": 0.2538111246, "remaining_time": 0.3969866308}, {"learn": [4.906637332], "iteration": 195, "passed_time": 0.2544339874, "remaining_time": 0.394632307}, {"learn": [4.905911243], "iteration": 196, "passed_time": 0.2551014951, "remaining_time": 0.3923642284}, {"learn": [4.904904021], "iteration": 197, "passed_time": 0.2556952031, "remaining_time": 0.3899997542}, {"learn": [4.90293831], "iteration": 198, "passed_time": 0.256375067, "remaining_time": 0.3877833927}, {"learn": [4.902002214], "iteration": 199, "passed_time": 0.2569908227, "remaining_time": 0.3854862341}, {"learn": [4.901130711], "iteration": 200, "passed_time": 0.2575508808, "remaining_time": 0.3831229521}, {"learn": [4.900256831], "iteration": 201, "passed_time": 0.2582759035, "remaining_time": 0.3810208873}, {"learn": [4.899364918], "iteration": 202, "passed_time": 0.2589572046, "remaining_time": 0.3788684225}, {"learn": [4.898370177], "iteration": 203, "passed_time": 0.2595370387, "remaining_time": 0.3765831542}, {"learn": [4.897518876], "iteration": 204, "passed_time": 0.2602032641, "remaining_time": 0.3744388435}, {"learn": [4.8951033], "iteration": 205, "passed_time": 0.2608365054, "remaining_time": 0.3722618086}, {"learn": [4.89410823], "iteration": 206, "passed_time": 0.2613997033, "remaining_time": 0.3700005462}, {"learn": [4.893286565], "iteration": 207, "passed_time": 0.2620378525, "remaining_time": 0.3678608314}, {"learn": [4.891838791], "iteration": 208, "passed_time": 0.2625971848, "remaining_time": 0.3656257453}, {"learn": [4.891114035], "iteration": 209, "passed_time": 0.2632670555, "remaining_time": 0.3635592672}, {"learn": [4.888209814], "iteration": 210, "passed_time": 0.2638868162, "remaining_time": 0.3614373928}, {"learn": [4.887504352], "iteration": 211, "passed_time": 0.2644741217, "remaining_time": 0.3592855994}, {"learn": [4.886261605], "iteration": 212, "passed_time": 0.265202235, "remaining_time": 0.3573382227}, {"learn": [4.884971715], "iteration": 213, "passed_time": 0.2658937402, "remaining_time": 0.3553533164}, {"learn": [4.884300852], "iteration": 214, "passed_time": 0.2665073908, "remaining_time": 0.3532772389}, {"learn": [4.883171741], "iteration": 215, "passed_time": 0.2671779536, "remaining_time": 0.3512895316}, {"learn": [4.881954252], "iteration": 216, "passed_time": 0.26784417, "remaining_time": 0.3493082955}, {"learn": [4.880292368], "iteration": 217, "passed_time": 0.2684234622, "remaining_time": 0.3472266805}, {"learn": [4.87959188], "iteration": 218, "passed_time": 0.269101904, "remaining_time": 0.3452860047}, {"learn": [4.878417117], "iteration": 219, "passed_time": 0.2696939612, "remaining_time": 0.3432468597}, {"learn": [4.877618587], "iteration": 220, "passed_time": 0.2703143847, "remaining_time": 0.3412566214}, {"learn": [4.875682727], "iteration": 221, "passed_time": 0.2709412476, "remaining_time": 0.3392867875}, {"learn": [4.873180096], "iteration": 222, "passed_time": 0.2715364768, "remaining_time": 0.3372897043}, {"learn": [4.870750184], "iteration": 223, "passed_time": 0.2721919166, "remaining_time": 0.3353793258}, {"learn": [4.870196677], "iteration": 224, "passed_time": 0.2727888229, "remaining_time": 0.3334085614}, {"learn": [4.868614084], "iteration": 225, "passed_time": 0.273518001, "remaining_time": 0.3316103198}, {"learn": [4.863003467], "iteration": 226, "passed_time": 0.2742230261, "remaining_time": 0.3297924499}, {"learn": [4.86228106], "iteration": 227, "passed_time": 0.2747969137, "remaining_time": 0.3278278971}, {"learn": [4.860028687], "iteration": 228, "passed_time": 0.2754644683, "remaining_time": 0.3259863359}, {"learn": [4.856442436], "iteration": 229, "passed_time": 0.2761231014, "remaining_time": 0.3241445103}, {"learn": [4.85423399], "iteration": 230, "passed_time": 0.2767244603, "remaining_time": 0.322246233}, {"learn": [4.852634863], "iteration": 231, "passed_time": 0.2773692708, "remaining_time": 0.3204093301}, {"learn": [4.84745618], "iteration": 232, "passed_time": 0.2780602844, "remaining_time": 0.3186356048}, {"learn": [4.846616825], "iteration": 233, "passed_time": 0.2786493381, "remaining_time": 0.3167552305}, {"learn": [4.845228181], "iteration": 234, "passed_time": 0.2793408411, "remaining_time": 0.3150013741}, {"learn": [4.84440163], "iteration": 235, "passed_time": 0.2802185083, "remaining_time": 0.313464772}, {"learn": [4.842531445], "iteration": 236, "passed_time": 0.2808731377, "remaining_time": 0.3116862246}, {"learn": [4.840165791], "iteration": 237, "passed_time": 0.2815656384, "remaining_time": 0.309958812}, {"learn": [4.838044102], "iteration": 238, "passed_time": 0.2821779478, "remaining_time": 0.308152487}, {"learn": [4.837446848], "iteration": 239, "passed_time": 0.2827407116, "remaining_time": 0.3063024376}, {"learn": [4.836003565], "iteration": 240, "passed_time": 0.2834204938, "remaining_time": 0.3045888294}, {"learn": [4.835260358], "iteration": 241, "passed_time": 0.2840211683, "remaining_time": 0.3027994274}, {"learn": [4.834800052], "iteration": 242, "passed_time": 0.2845931386, "remaining_time": 0.3009894511}, {"learn": [4.83280414], "iteration": 243, "passed_time": 0.2852890759, "remaining_time": 0.2993196862}, {"learn": [4.831859693], "iteration": 244, "passed_time": 0.285888694, "remaining_time": 0.2975576202}, {"learn": [4.831416284], "iteration": 245, "passed_time": 0.2865537516, "remaining_time": 0.2958725728}, {"learn": [4.829510984], "iteration": 246, "passed_time": 0.287147066, "remaining_time": 0.2941222983}, {"learn": [4.824686704], "iteration": 247, "passed_time": 0.2878306666, "remaining_time": 0.2924730967}, {"learn": [4.823949759], "iteration": 248, "passed_time": 0.2884734874, "remaining_time": 0.2907905435}, {"learn": [4.822232141], "iteration": 249, "passed_time": 0.2891316226, "remaining_time": 0.2891316226}, {"learn": [4.819999019], "iteration": 250, "passed_time": 0.2897718323, "remaining_time": 0.2874628934}, {"learn": [4.818604993], "iteration": 251, "passed_time": 0.2903512438, "remaining_time": 0.2857424939}, {"learn": [4.818014406], "iteration": 252, "passed_time": 0.2910087239, "remaining_time": 0.2841073312}, {"learn": [4.813329859], "iteration": 253, "passed_time": 0.2916282851, "remaining_time": 0.2824431423}, {"learn": [4.811600584], "iteration": 254, "passed_time": 0.2921855823, "remaining_time": 0.2807273242}, {"learn": [4.810318364], "iteration": 255, "passed_time": 0.2928308258, "remaining_time": 0.2791043808}, {"learn": [4.809863031], "iteration": 256, "passed_time": 0.2934211335, "remaining_time": 0.2774371028}, {"learn": [4.80520063], "iteration": 257, "passed_time": 0.2941404374, "remaining_time": 0.2758991699}, {"learn": [4.803885016], "iteration": 258, "passed_time": 0.2947143932, "remaining_time": 0.2742323118}, {"learn": [4.803251556], "iteration": 259, "passed_time": 0.2953501909, "remaining_time": 0.2726309454}, {"learn": [4.801484567], "iteration": 260, "passed_time": 0.2959751486, "remaining_time": 0.2710270518}, {"learn": [4.795285505], "iteration": 261, "passed_time": 0.296579765, "remaining_time": 0.269412153}, {"learn": [4.789846535], "iteration": 262, "passed_time": 0.2972607883, "remaining_time": 0.2678737902}, {"learn": [4.788247325], "iteration": 263, "passed_time": 0.2978486142, "remaining_time": 0.2662586097}, {"learn": [4.78646006], "iteration": 264, "passed_time": 0.2985161222, "remaining_time": 0.2647218442}, {"learn": [4.783116036], "iteration": 265, "passed_time": 0.2991763063, "remaining_time": 0.2631851717}, {"learn": [4.781845994], "iteration": 266, "passed_time": 0.2997423919, "remaining_time": 0.2615729487}, {"learn": [4.777630657], "iteration": 267, "passed_time": 0.3004043959, "remaining_time": 0.2600515666}, {"learn": [4.776795293], "iteration": 268, "passed_time": 0.3009985104, "remaining_time": 0.2584782748}, {"learn": [4.77508684], "iteration": 269, "passed_time": 0.3016307708, "remaining_time": 0.2569447307}, {"learn": [4.773534727], "iteration": 270, "passed_time": 0.3022432626, "remaining_time": 0.2554011333}, {"learn": [4.773027319], "iteration": 271, "passed_time": 0.3028193311, "remaining_time": 0.253833851}, {"learn": [4.768144585], "iteration": 272, "passed_time": 0.3034746111, "remaining_time": 0.2523396949}, {"learn": [4.766467567], "iteration": 273, "passed_time": 0.3040359504, "remaining_time": 0.2507741781}, {"learn": [4.765994742], "iteration": 274, "passed_time": 0.3046731471, "remaining_time": 0.2492780294}, {"learn": [4.761264769], "iteration": 275, "passed_time": 0.3053246602, "remaining_time": 0.2477997242}, {"learn": [4.759955793], "iteration": 276, "passed_time": 0.305886717, "remaining_time": 0.2462553715}, {"learn": [4.755861902], "iteration": 277, "passed_time": 0.3065538986, "remaining_time": 0.2448020341}, {"learn": [4.755046809], "iteration": 278, "passed_time": 0.3071488859, "remaining_time": 0.2432971462}, {"learn": [4.754037634], "iteration": 279, "passed_time": 0.3077890262, "remaining_time": 0.2418342348}, {"learn": [4.751874784], "iteration": 280, "passed_time": 0.308453366, "remaining_time": 0.2403960397}, {"learn": [4.751522854], "iteration": 281, "passed_time": 0.3090319288, "remaining_time": 0.238897023}, {"learn": [4.750534751], "iteration": 282, "passed_time": 0.3096926805, "remaining_time": 0.2374675324}, {"learn": [4.745485968], "iteration": 283, "passed_time": 0.3102991159, "remaining_time": 0.2360021445}, {"learn": [4.741270946], "iteration": 284, "passed_time": 0.3109543692, "remaining_time": 0.2345796119}, {"learn": [4.737875729], "iteration": 285, "passed_time": 0.3116086687, "remaining_time": 0.2331617311}, {"learn": [4.736133552], "iteration": 286, "passed_time": 0.3122054422, "remaining_time": 0.231706478}, {"learn": [4.734744279], "iteration": 287, "passed_time": 0.3128438995, "remaining_time": 0.2302878705}, {"learn": [4.733074007], "iteration": 288, "passed_time": 0.3134387485, "remaining_time": 0.2288428233}, {"learn": [4.731473118], "iteration": 289, "passed_time": 0.3140873704, "remaining_time": 0.2274425786}, {"learn": [4.730450138], "iteration": 290, "passed_time": 0.3147117232, "remaining_time": 0.2260300693}, {"learn": [4.729128978], "iteration": 291, "passed_time": 0.315281031, "remaining_time": 0.2245837481}, {"learn": [4.728102124], "iteration": 292, "passed_time": 0.3159095562, "remaining_time": 0.2231852496}, {"learn": [4.727043232], "iteration": 293, "passed_time": 0.3165042802, "remaining_time": 0.2217683052}, {"learn": [4.726387671], "iteration": 294, "passed_time": 0.3172073319, "remaining_time": 0.2204322137}, {"learn": [4.723981089], "iteration": 295, "passed_time": 0.3178728057, "remaining_time": 0.2190745013}, {"learn": [4.719619645], "iteration": 296, "passed_time": 0.3184800969, "remaining_time": 0.2176816824}, {"learn": [4.718336537], "iteration": 297, "passed_time": 0.3191196496, "remaining_time": 0.2163160041}, {"learn": [4.714490484], "iteration": 298, "passed_time": 0.3197261143, "remaining_time": 0.2149329397}, {"learn": [4.712986936], "iteration": 299, "passed_time": 0.320318451, "remaining_time": 0.213545634}, {"learn": [4.711545447], "iteration": 300, "passed_time": 0.3209738625, "remaining_time": 0.2122053111}, {"learn": [4.711258587], "iteration": 301, "passed_time": 0.3215338373, "remaining_time": 0.210806953}, {"learn": [4.709062362], "iteration": 302, "passed_time": 0.3221975874, "remaining_time": 0.2094815997}, {"learn": [4.707678862], "iteration": 303, "passed_time": 0.3227908027, "remaining_time": 0.2081151228}, {"learn": [4.706352177], "iteration": 304, "passed_time": 0.3234852776, "remaining_time": 0.2068184562}, {"learn": [4.702530882], "iteration": 305, "passed_time": 0.3241492447, "remaining_time": 0.2055063839}, {"learn": [4.701604399], "iteration": 306, "passed_time": 0.3247209011, "remaining_time": 0.2041405013}, {"learn": [4.697301946], "iteration": 307, "passed_time": 0.3254076705, "remaining_time": 0.2028515348}, {"learn": [4.695198854], "iteration": 308, "passed_time": 0.3259833755, "remaining_time": 0.2014978146}, {"learn": [4.694911252], "iteration": 309, "passed_time": 0.3266294451, "remaining_time": 0.2001922406}, {"learn": [4.693934864], "iteration": 310, "passed_time": 0.3273173465, "remaining_time": 0.1989163296}, {"learn": [4.69298937], "iteration": 311, "passed_time": 0.3279086991, "remaining_time": 0.197586011}, {"learn": [4.689320234], "iteration": 312, "passed_time": 0.3285663673, "remaining_time": 0.1963000341}, {"learn": [4.686777927], "iteration": 313, "passed_time": 0.329216693, "remaining_time": 0.1950137099}, {"learn": [4.684658556], "iteration": 314, "passed_time": 0.3297858062, "remaining_time": 0.1936837274}, {"learn": [4.681165383], "iteration": 315, "passed_time": 0.3304508693, "remaining_time": 0.1924144302}, {"learn": [4.677486637], "iteration": 316, "passed_time": 0.3310503864, "remaining_time": 0.1911111064}, {"learn": [4.673824568], "iteration": 317, "passed_time": 0.3317147961, "remaining_time": 0.1898493487}, {"learn": [4.669387886], "iteration": 318, "passed_time": 0.332364468, "remaining_time": 0.188582974}, {"learn": [4.667006674], "iteration": 319, "passed_time": 0.3329599071, "remaining_time": 0.1872899478}, {"learn": [4.663380257], "iteration": 320, "passed_time": 0.3335610229, "remaining_time": 0.1860044333}, {"learn": [4.663005615], "iteration": 321, "passed_time": 0.3342442948, "remaining_time": 0.1847685854}, {"learn": [4.661751426], "iteration": 322, "passed_time": 0.3348670014, "remaining_time": 0.1835029698}, {"learn": [4.661199777], "iteration": 323, "passed_time": 0.3354853698, "remaining_time": 0.1822389663}, {"learn": [4.657930392], "iteration": 324, "passed_time": 0.336085587, "remaining_time": 0.1809691623}, {"learn": [4.656250482], "iteration": 325, "passed_time": 0.3367183642, "remaining_time": 0.1797208447}, {"learn": [4.652633559], "iteration": 326, "passed_time": 0.3373188153, "remaining_time": 0.1784591897}, {"learn": [4.651395089], "iteration": 327, "passed_time": 0.3379899679, "remaining_time": 0.1772386417}, {"learn": [4.650136548], "iteration": 328, "passed_time": 0.3386100981, "remaining_time": 0.1759949142}, {"learn": [4.649157339], "iteration": 329, "passed_time": 0.3391732568, "remaining_time": 0.1747256171}, {"learn": [4.647113531], "iteration": 330, "passed_time": 0.3397924559, "remaining_time": 0.1734891996}, {"learn": [4.646751357], "iteration": 331, "passed_time": 0.3403770012, "remaining_time": 0.1722389645}, {"learn": [4.645578183], "iteration": 332, "passed_time": 0.3410287683, "remaining_time": 0.1710264394}, {"learn": [4.641925505], "iteration": 333, "passed_time": 0.3416832626, "remaining_time": 0.1698186275}, {"learn": [4.641381966], "iteration": 334, "passed_time": 0.3422745306, "remaining_time": 0.1685829778}, {"learn": [4.64041295], "iteration": 335, "passed_time": 0.3428997946, "remaining_time": 0.1673677569}, {"learn": [4.639550832], "iteration": 336, "passed_time": 0.3434999635, "remaining_time": 0.1661438993}, {"learn": [4.637980864], "iteration": 337, "passed_time": 0.3441134919, "remaining_time": 0.1649301352}, {"learn": [4.634510575], "iteration": 338, "passed_time": 0.3447653282, "remaining_time": 0.1637381057}, {"learn": [4.63367401], "iteration": 339, "passed_time": 0.3453603634, "remaining_time": 0.162522524}, {"learn": [4.632338455], "iteration": 340, "passed_time": 0.3460245238, "remaining_time": 0.1613428132}, {"learn": [4.631608654], "iteration": 341, "passed_time": 0.34658469, "remaining_time": 0.1601180732}, {"learn": [4.628475613], "iteration": 342, "passed_time": 0.3472714944, "remaining_time": 0.1589551738}, {"learn": [4.6272524], "iteration": 343, "passed_time": 0.3478929946, "remaining_time": 0.1577654278}, {"learn": [4.626907749], "iteration": 344, "passed_time": 0.3484881929, "remaining_time": 0.1565671591}, {"learn": [4.62523746], "iteration": 345, "passed_time": 0.3491508723, "remaining_time": 0.1554024114}, {"learn": [4.624253141], "iteration": 346, "passed_time": 0.3497691626, "remaining_time": 0.1542209852}, {"learn": [4.62398009], "iteration": 347, "passed_time": 0.3503529411, "remaining_time": 0.1530277214}, {"learn": [4.62065362], "iteration": 348, "passed_time": 0.3510047475, "remaining_time": 0.1518673836}, {"learn": [4.620084896], "iteration": 349, "passed_time": 0.3515727267, "remaining_time": 0.1506740257}, {"learn": [4.618993026], "iteration": 350, "passed_time": 0.3522341779, "remaining_time": 0.1495239103}, {"learn": [4.616176535], "iteration": 351, "passed_time": 0.3528795169, "remaining_time": 0.1483697969}, {"learn": [4.614921582], "iteration": 352, "passed_time": 0.3534700742, "remaining_time": 0.1471957533}, {"learn": [4.61413181], "iteration": 353, "passed_time": 0.3541279405, "remaining_time": 0.1460527664}, {"learn": [4.612018964], "iteration": 354, "passed_time": 0.3547415891, "remaining_time": 0.1448944519}, {"learn": [4.610579098], "iteration": 355, "passed_time": 0.3553359667, "remaining_time": 0.1437314022}, {"learn": [4.607373016], "iteration": 356, "passed_time": 0.3559879898, "remaining_time": 0.142594629}, {"learn": [4.60552281], "iteration": 357, "passed_time": 0.356564531, "remaining_time": 0.141430624}, {"learn": [4.602933569], "iteration": 358, "passed_time": 0.3572417619, "remaining_time": 0.1403094385}, {"learn": [4.602421968], "iteration": 359, "passed_time": 0.3578521502, "remaining_time": 0.1391647251}, {"learn": [4.59937991], "iteration": 360, "passed_time": 0.3584504751, "remaining_time": 0.138018327}, {"learn": [4.598608961], "iteration": 361, "passed_time": 0.359114403, "remaining_time": 0.1368999658}, {"learn": [4.596989225], "iteration": 362, "passed_time": 0.3596771288, "remaining_time": 0.1357459136}, {"learn": [4.593848864], "iteration": 363, "passed_time": 0.3603372338, "remaining_time": 0.1346314939}, {"learn": [4.591691634], "iteration": 364, "passed_time": 0.3609891759, "remaining_time": 0.1335165445}, {"learn": [4.589658172], "iteration": 365, "passed_time": 0.3615513148, "remaining_time": 0.1323712464}, {"learn": [4.588260137], "iteration": 366, "passed_time": 0.3621871137, "remaining_time": 0.1312558205}, {"learn": [4.584951089], "iteration": 367, "passed_time": 0.3627836052, "remaining_time": 0.1301289019}, {"learn": [4.584045341], "iteration": 368, "passed_time": 0.36340169, "remaining_time": 0.1290125241}, {"learn": [4.583293843], "iteration": 369, "passed_time": 0.3640584738, "remaining_time": 0.1279124367}, {"learn": [4.582565575], "iteration": 370, "passed_time": 0.3646493214, "remaining_time": 0.1267918126}, {"learn": [4.57954937], "iteration": 371, "passed_time": 0.3653073997, "remaining_time": 0.1256971698}, {"learn": [4.576565653], "iteration": 372, "passed_time": 0.3658951651, "remaining_time": 0.1245809275}, {"learn": [4.573607221], "iteration": 373, "passed_time": 0.3665481245, "remaining_time": 0.1234894751}, {"learn": [4.57268461], "iteration": 374, "passed_time": 0.3672377834, "remaining_time": 0.1224125945}, {"learn": [4.570040734], "iteration": 375, "passed_time": 0.367844442, "remaining_time": 0.1213104011}, {"learn": [4.567267341], "iteration": 376, "passed_time": 0.3685306444, "remaining_time": 0.1202367885}, {"learn": [4.565957541], "iteration": 377, "passed_time": 0.3691807144, "remaining_time": 0.1191535639}, {"learn": [4.564234056], "iteration": 378, "passed_time": 0.3697495645, "remaining_time": 0.1180466947}, {"learn": [4.561418188], "iteration": 379, "passed_time": 0.3704235714, "remaining_time": 0.1169758646}, {"learn": [4.560009845], "iteration": 380, "passed_time": 0.3709911125, "remaining_time": 0.1158738645}, {"learn": [4.559431961], "iteration": 381, "passed_time": 0.3716122609, "remaining_time": 0.114791222}, {"learn": [4.556321316], "iteration": 382, "passed_time": 0.3722595073, "remaining_time": 0.1137189618}, {"learn": [4.555609714], "iteration": 383, "passed_time": 0.3728551192, "remaining_time": 0.1126333172}, {"learn": [4.555097374], "iteration": 384, "passed_time": 0.3734809227, "remaining_time": 0.1115592367}, {"learn": [4.554870625], "iteration": 385, "passed_time": 0.3740520652, "remaining_time": 0.1104713353}, {"learn": [4.553738008], "iteration": 386, "passed_time": 0.3747089262, "remaining_time": 0.1094111335}, {"learn": [4.550847965], "iteration": 387, "passed_time": 0.375400269, "remaining_time": 0.1083629643}, {"learn": [4.549446286], "iteration": 388, "passed_time": 0.3759672789, "remaining_time": 0.1072811516}, {"learn": [4.548634343], "iteration": 389, "passed_time": 0.3765957611, "remaining_time": 0.1062193172}, {"learn": [4.545181494], "iteration": 390, "passed_time": 0.3771938548, "remaining_time": 0.1051512281}, {"learn": [4.544252451], "iteration": 391, "passed_time": 0.3778127941, "remaining_time": 0.10409128}, {"learn": [4.54140594], "iteration": 392, "passed_time": 0.3784608622, "remaining_time": 0.103041507}, {"learn": [4.540653813], "iteration": 393, "passed_time": 0.3790547174, "remaining_time": 0.1019791879}, {"learn": [4.540036391], "iteration": 394, "passed_time": 0.3796762244, "remaining_time": 0.1009265913}, {"learn": [4.539180274], "iteration": 395, "passed_time": 0.3803032925, "remaining_time": 0.09987763237}, {"learn": [4.536444957], "iteration": 396, "passed_time": 0.3808928634, "remaining_time": 0.09882107036}, {"learn": [4.533770899], "iteration": 397, "passed_time": 0.3815978435, "remaining_time": 0.09779643225}, {"learn": [4.531723551], "iteration": 398, "passed_time": 0.3822346198, "remaining_time": 0.09675613182}, {"learn": [4.529121694], "iteration": 399, "passed_time": 0.382927013, "remaining_time": 0.09573175325}, {"learn": [4.528435862], "iteration": 400, "passed_time": 0.3835333792, "remaining_time": 0.09468779188}, {"learn": [4.525788986], "iteration": 401, "passed_time": 0.384189681, "remaining_time": 0.09365818093}, {"learn": [4.522362209], "iteration": 402, "passed_time": 0.3848537269, "remaining_time": 0.09263228662}, {"learn": [4.521184158], "iteration": 403, "passed_time": 0.3854360492, "remaining_time": 0.09158876416}, {"learn": [4.520861783], "iteration": 404, "passed_time": 0.3860932678, "remaining_time": 0.09056508751}, {"learn": [4.520194795], "iteration": 405, "passed_time": 0.3866891994, "remaining_time": 0.08952902645}, {"learn": [4.51954821], "iteration": 406, "passed_time": 0.3873375029, "remaining_time": 0.08850709525}, {"learn": [4.519179544], "iteration": 407, "passed_time": 0.3879795981, "remaining_time": 0.08748559566}, {"learn": [4.517263521], "iteration": 408, "passed_time": 0.3885426118, "remaining_time": 0.08644835617}, {"learn": [4.516635938], "iteration": 409, "passed_time": 0.3891985208, "remaining_time": 0.08543382165}, {"learn": [4.514130206], "iteration": 410, "passed_time": 0.3898011887, "remaining_time": 0.08440950314}, {"learn": [4.512102306], "iteration": 411, "passed_time": 0.3904729649, "remaining_time": 0.08340199251}, {"learn": [4.508755014], "iteration": 412, "passed_time": 0.3911258548, "remaining_time": 0.08239212922}, {"learn": [4.504915937], "iteration": 413, "passed_time": 0.3917276832, "remaining_time": 0.08137338347}, {"learn": [4.501682766], "iteration": 414, "passed_time": 0.3923977113, "remaining_time": 0.08037061556}, {"learn": [4.498894345], "iteration": 415, "passed_time": 0.3930558616, "remaining_time": 0.07936704897}, {"learn": [4.496347108], "iteration": 416, "passed_time": 0.393655432, "remaining_time": 0.07835347928}, {"learn": [4.495382169], "iteration": 417, "passed_time": 0.3942929773, "remaining_time": 0.07734934004}, {"learn": [4.494085463], "iteration": 418, "passed_time": 0.3949781319, "remaining_time": 0.07635615437}, {"learn": [4.493416637], "iteration": 419, "passed_time": 0.3955515394, "remaining_time": 0.07534315036}, {"learn": [4.490806311], "iteration": 420, "passed_time": 0.3962669146, "remaining_time": 0.07435887471}, {"learn": [4.48931116], "iteration": 421, "passed_time": 0.3968682983, "remaining_time": 0.07335480395}, {"learn": [4.488769383], "iteration": 422, "passed_time": 0.3974846872, "remaining_time": 0.0723553686}, {"learn": [4.486639813], "iteration": 423, "passed_time": 0.398165571, "remaining_time": 0.07136930045}, {"learn": [4.485704248], "iteration": 424, "passed_time": 0.3987723296, "remaining_time": 0.07037158757}, {"learn": [4.485118332], "iteration": 425, "passed_time": 0.3994346404, "remaining_time": 0.06938536007}, {"learn": [4.484505333], "iteration": 426, "passed_time": 0.4000986645, "remaining_time": 0.06840094264}, {"learn": [4.483133294], "iteration": 427, "passed_time": 0.4006677021, "remaining_time": 0.06740204334}, {"learn": [4.481298919], "iteration": 428, "passed_time": 0.401303089, "remaining_time": 0.06641612895}, {"learn": [4.480703883], "iteration": 429, "passed_time": 0.40190206, "remaining_time": 0.06542591675}, {"learn": [4.476686267], "iteration": 430, "passed_time": 0.4025622609, "remaining_time": 0.06444732251}, {"learn": [4.474035863], "iteration": 431, "passed_time": 0.4032093712, "remaining_time": 0.06346814177}, {"learn": [4.473436348], "iteration": 432, "passed_time": 0.4038025721, "remaining_time": 0.06248215318}, {"learn": [4.47286384], "iteration": 433, "passed_time": 0.4044629105, "remaining_time": 0.06150818455}, {"learn": [4.47013046], "iteration": 434, "passed_time": 0.4050590601, "remaining_time": 0.06052606646}, {"learn": [4.469004107], "iteration": 435, "passed_time": 0.4056848721, "remaining_time": 0.05955007296}, {"learn": [4.467311276], "iteration": 436, "passed_time": 0.4063358773, "remaining_time": 0.05857931412}, {"learn": [4.466673805], "iteration": 437, "passed_time": 0.4068928378, "remaining_time": 0.05759670306}, {"learn": [4.463888475], "iteration": 438, "passed_time": 0.4075583766, "remaining_time": 0.05663111838}, {"learn": [4.463459923], "iteration": 439, "passed_time": 0.4081441461, "remaining_time": 0.05565601993}, {"learn": [4.461220433], "iteration": 440, "passed_time": 0.4088078791, "remaining_time": 0.05469311762}, {"learn": [4.460660315], "iteration": 441, "passed_time": 0.4094386797, "remaining_time": 0.05372724757}, {"learn": [4.458446537], "iteration": 442, "passed_time": 0.4100387342, "remaining_time": 0.0527589342}, {"learn": [4.457991071], "iteration": 443, "passed_time": 0.410664604, "remaining_time": 0.05179553565}, {"learn": [4.457149844], "iteration": 444, "passed_time": 0.4112859106, "remaining_time": 0.05083309008}, {"learn": [4.455704025], "iteration": 445, "passed_time": 0.4119356996, "remaining_time": 0.04987562282}, {"learn": [4.45489985], "iteration": 446, "passed_time": 0.412555332, "remaining_time": 0.04891595659}, {"learn": [4.454043786], "iteration": 447, "passed_time": 0.4132394757, "remaining_time": 0.04796529629}, {"learn": [4.451738617], "iteration": 448, "passed_time": 0.4138625196, "remaining_time": 0.04700888308}, {"learn": [4.450476381], "iteration": 449, "passed_time": 0.4144207237, "remaining_time": 0.04604674708}, {"learn": [4.4499696], "iteration": 450, "passed_time": 0.4150995756, "remaining_time": 0.04509951043}, {"learn": [4.447686922], "iteration": 451, "passed_time": 0.4156939287, "remaining_time": 0.044144488}, {"learn": [4.446948322], "iteration": 452, "passed_time": 0.4163609462, "remaining_time": 0.04319859707}, {"learn": [4.443294595], "iteration": 453, "passed_time": 0.4170238581, "remaining_time": 0.04225351867}, {"learn": [4.439844294], "iteration": 454, "passed_time": 0.417757099, "remaining_time": 0.04131663616}, {"learn": [4.437661741], "iteration": 455, "passed_time": 0.4184126845, "remaining_time": 0.04037315377}, {"learn": [4.436515221], "iteration": 456, "passed_time": 0.4190811782, "remaining_time": 0.03943214587}, {"learn": [4.436017828], "iteration": 457, "passed_time": 0.4196984548, "remaining_time": 0.03848763122}, {"learn": [4.432974718], "iteration": 458, "passed_time": 0.4203048233, "remaining_time": 0.03754356809}, {"learn": [4.431623545], "iteration": 459, "passed_time": 0.4209614215, "remaining_time": 0.036605341}, {"learn": [4.431001523], "iteration": 460, "passed_time": 0.4215940276, "remaining_time": 0.03566630602}, {"learn": [4.429975525], "iteration": 461, "passed_time": 0.4221644712, "remaining_time": 0.03472348465}, {"learn": [4.427522831], "iteration": 462, "passed_time": 0.4228232165, "remaining_time": 0.03378932832}, {"learn": [4.426558229], "iteration": 463, "passed_time": 0.4233889757, "remaining_time": 0.03284914466}, {"learn": [4.425337888], "iteration": 464, "passed_time": 0.4240032971, "remaining_time": 0.03191422666}, {"learn": [4.424913998], "iteration": 465, "passed_time": 0.4246179359, "remaining_time": 0.03098070777}, {"learn": [4.424363235], "iteration": 466, "passed_time": 0.4252139089, "remaining_time": 0.03004723554}, {"learn": [4.423576335], "iteration": 467, "passed_time": 0.4258985075, "remaining_time": 0.02912126547}, {"learn": [4.422877085], "iteration": 468, "passed_time": 0.4264906843, "remaining_time": 0.02819021581}, {"learn": [4.42016517], "iteration": 469, "passed_time": 0.4271836066, "remaining_time": 0.02726703872}, {"learn": [4.418393941], "iteration": 470, "passed_time": 0.4278730552, "remaining_time": 0.02634462548}, {"learn": [4.416803839], "iteration": 471, "passed_time": 0.4284723555, "remaining_time": 0.0254178516}, {"learn": [4.416036503], "iteration": 472, "passed_time": 0.4290886644, "remaining_time": 0.02449343328}, {"learn": [4.413707418], "iteration": 473, "passed_time": 0.4297440139, "remaining_time": 0.02357245646}, {"learn": [4.411321979], "iteration": 474, "passed_time": 0.4303437153, "remaining_time": 0.02264966922}, {"learn": [4.410926348], "iteration": 475, "passed_time": 0.4309972309, "remaining_time": 0.02173095282}, {"learn": [4.410041175], "iteration": 476, "passed_time": 0.431568531, "remaining_time": 0.02080938409}, {"learn": [4.409639094], "iteration": 477, "passed_time": 0.4321549811, "remaining_time": 0.01988997821}, {"learn": [4.407889459], "iteration": 478, "passed_time": 0.4328140624, "remaining_time": 0.01897514679}, {"learn": [4.406206589], "iteration": 479, "passed_time": 0.433411399, "remaining_time": 0.01805880829}, {"learn": [4.405644342], "iteration": 480, "passed_time": 0.4340166014, "remaining_time": 0.01714410692}, {"learn": [4.40512775], "iteration": 481, "passed_time": 0.4346430633, "remaining_time": 0.01623148369}, {"learn": [4.404358032], "iteration": 482, "passed_time": 0.4352203204, "remaining_time": 0.01531831355}, {"learn": [4.403343066], "iteration": 483, "passed_time": 0.435901599, "remaining_time": 0.01440997022}, {"learn": [4.40314122], "iteration": 484, "passed_time": 0.4365247121, "remaining_time": 0.01350076429}, {"learn": [4.402912571], "iteration": 485, "passed_time": 0.4371127419, "remaining_time": 0.01259172507}, {"learn": [4.402381202], "iteration": 486, "passed_time": 0.4377840727, "remaining_time": 0.01168622781}, {"learn": [4.401476917], "iteration": 487, "passed_time": 0.4384164787, "remaining_time": 0.01078073308}, {"learn": [4.400731563], "iteration": 488, "passed_time": 0.4389823042, "remaining_time": 0.009874857558}, {"learn": [4.400199715], "iteration": 489, "passed_time": 0.4396417393, "remaining_time": 0.008972280393}, {"learn": [4.399742353], "iteration": 490, "passed_time": 0.4402825559, "remaining_time": 0.008070352348}, {"learn": [4.399368637], "iteration": 491, "passed_time": 0.4409553284, "remaining_time": 0.00717000534}, {"learn": [4.398807983], "iteration": 492, "passed_time": 0.4415760397, "remaining_time": 0.006269842349}, {"learn": [4.396058709], "iteration": 493, "passed_time": 0.4421741093, "remaining_time": 0.005370535741}, {"learn": [4.393076986], "iteration": 494, "passed_time": 0.4428541803, "remaining_time": 0.004473274549}, {"learn": [4.392579701], "iteration": 495, "passed_time": 0.4435044025, "remaining_time": 0.003576648407}, {"learn": [4.389159927], "iteration": 496, "passed_time": 0.4441067272, "remaining_time": 0.002680724711}, {"learn": [4.386966139], "iteration": 497, "passed_time": 0.4447749227, "remaining_time": 0.00178624467}, {"learn": [4.38454446], "iteration": 498, "passed_time": 0.4454336255, "remaining_time": 0.0008926525562}, {"learn": [4.383403888], "iteration": 499, "passed_time": 0.4460289116, "remaining_time": 0}], "meta": {"test_sets": [], "test_metrics": [], "learn_metrics": [{"best_value": "Min", "name": "RMSE"}], "launch_mode": "Train", "parameters": "", "iteration_count": 500, "learn_sets": ["learn"], "name": "experiment"}}}}}, "layout": "IPY_MODEL_2900484c4be644e7a8c438684882be05", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebook_catboost_regressor';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Content with notebooks" href="notebooks.html" />
+    <link rel="prev" title="Catboost metrics" href="notebook_catboost_metrics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Catboost
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html"><i class="fas fa-book fa-fw"></i> Assessing Performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebook_catboost_classifier.html"><span class="xref myst">Catboost Classifier</span></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="notebook_catboost_metrics.html">Catboost metrics</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Catboost regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebook_catboost_regressor.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/notebook_catboost_regressor.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Catboost regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#description">Description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#popular-regression-models">Popular regression models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rmse">1) RMSE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-model">2) Poisson model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#event-rate-lambda-as-dependent-variable">Event rate <span class="math notranslate nohighlight">\(\lambda\)</span> as dependent variable</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cox-proportional-model">3) Cox proportional model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tweedie">4) Tweedie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compound-poisson-distribution">Compound Poisson distribution</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <p><span class="xref myst">Перейти к разделу о общей информации о Catboost</span></p>
+<p><span class="xref myst">Перейти к разделу о классификации</span></p>
+<p><span class="xref myst">Перейти к разделу о регрессии</span></p>
+<p><span class="xref myst">Перейти к разделу об обработке текста</span></p>
+<section class="tex2jax_ignore mathjax_ignore" id="catboost-regression">
+<h1>Catboost regression<a class="headerlink" href="#catboost-regression" title="Permalink to this heading">#</a></h1>
+<p>CatBoost Regression is based on the same gradient boosting algorithm as CatBoost Classifier. Gradient boosting is an ensemble method that combines predictions from multiple weak models (usually decision trees) to create a stronger model.</p>
+<p>In regression tasks, CatBoost minimizes the mean squared error (MSE) as the loss function. MSE measures the average squared difference between predicted values and actual values. The model aims to find optimal weights that minimize MSE.</p>
+<section id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading">#</a></h2>
+<p>Training and applying models</p>
+</section>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h2>
+<p>A one-dimensional array of categorical columns indices (specified as integers) or names (specified as strings).</p>
+<p>This array can contain both indices and names for different elements.</p>
+<p>If any features in the cat_features parameter are specified as names instead of indices, feature names must be provided for the training dataset. Therefore, the type of the X parameter in the future calls of the fit function must be either catboost.Pool with defined feature names data or pandas.DataFrame with defined column names.</p>
+</section>
+<section id="popular-regression-models">
+<h2>Popular regression models<a class="headerlink" href="#popular-regression-models" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="rmse">
+<h2>1) RMSE<a class="headerlink" href="#rmse" title="Permalink to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\( L(w) = \displaystyle\sqrt{\displaystyle\frac{\sum\limits_{i=1}^N (a_{i}-t_{i})^2 w_{i}}{\sum\limits_{i=1}^{N}w_{i}}}\)</span></p>
+</section>
+<section id="poisson-model">
+<h2>2) Poisson model<a class="headerlink" href="#poisson-model" title="Permalink to this heading">#</a></h2>
+<p>Probability Mass Function of the Poisson distribution is the following:</p>
+<div class="math notranslate nohighlight">
+\[P(k) = \frac{e^{-\lambda} (\lambda )^k}{k!}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(P(k)\)</span> is probability of seeing k events during time unit given event rate (=number of events per time unit) <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<section id="event-rate-lambda-as-dependent-variable">
+<h3>Event rate <span class="math notranslate nohighlight">\(\lambda\)</span> as dependent variable<a class="headerlink" href="#event-rate-lambda-as-dependent-variable" title="Permalink to this heading">#</a></h3>
+<p>The idea of Poisson regression is to say that event rate <span class="math notranslate nohighlight">\(\lambda\)</span> is a dependent variable.</p>
+<p>For instance the number of bicycles that cross a bridge per day depends on weather, time of the year, day of the week etc. We could build usual RMSE regression model, however such model would not account for the count-based properties of the data.  So in Poisson regression we would like to maximize log-likelihood for a Poisson distribution. Let <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(y\)</span> be our dataset for Poisson regression task (meaning <span class="math notranslate nohighlight">\(y\)</span> is count-based), then we want to maximize the log-likelihood:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{N} log(P_X(y)) = \sum_{i=1}^{N} log\left( \frac{e^{-\lambda(X_i) } (\lambda(X_i)) ^{y_i}}{y_i!} \right) = \sum_{i=1}^{N}\left( y_i \log (\lambda(X_i) ) - \lambda(X_i) - \log(y_i!) \right) \]</div>
+<p>Since <span class="math notranslate nohighlight">\(\log(y_i !)\)</span> does not depend on <span class="math notranslate nohighlight">\(X_i\)</span> we drop this term and minimize the following loss:</p>
+<div class="math notranslate nohighlight">
+\[L_{\text{poisson}} =  \sum_{i=1}^{N}\left(\lambda(X_i) - y_i \log (\lambda(X_i) )  \right)\]</div>
+<p>This loss can be optimized with different models and optimization methods.</p>
+</section>
+</section>
+<section id="cox-proportional-model">
+<h2>3) Cox proportional model<a class="headerlink" href="#cox-proportional-model" title="Permalink to this heading">#</a></h2>
+<p>Survival models of this type can be viewed as consisting of two parts: the underlying <a href="https://en.wikipedia.org/wiki/Hazard_function"> baseline hazard </a> function, often denoted <span class="math notranslate nohighlight">\({\displaystyle \lambda _{0}(t)}\)</span>, describing how the risk of event per time unit changes over time at baseline levels of covariates; and the effect parameters, describing how the hazard varies in response to explanatory covariates.</p>
+<p>Let <span class="math notranslate nohighlight">\(X_i=(X_{i1},...,X_{ip})\)</span> be the realized values of the covariates for subject i. The hazard function for the Cox proportional hazards model has the form:</p>
+<div class="math notranslate nohighlight">
+\[\lambda(t|X_i)=\lambda_0(t)exp(h(X_i)),\]</div>
+<p>where <span class="math notranslate nohighlight">\(h(X_i)\)</span> is the hazard rate for considered sample <span class="math notranslate nohighlight">\(X_i\)</span>, represented as CatBoost model.This expression gives the hazard function at time <span class="math notranslate nohighlight">\(t\)</span> for subject <span class="math notranslate nohighlight">\(i\)</span> with covariate vector (explanatory variables) <span class="math notranslate nohighlight">\(X_i\)</span>.The likelihood of the event to be observed occurring for subject <span class="math notranslate nohighlight">\(i\)</span> at time <span class="math notranslate nohighlight">\(Y_i\)</span> can be written as:</p>
+<div class="math notranslate nohighlight">
+\[L_i(\beta)=
+    \frac{\lambda(Y_i|X_i)}{\sum_{j: Y_j \ge Y_i}\lambda(Y_i|X_j)} =
+    \frac{\lambda_0(Y_i)exp(h(X_i))}{\sum_{j: Y_j \ge Y_i}\lambda_0(Y_i)exp(h(X_j))} =
+    \frac{exp(h(X_i))}{\sum_{j: Y_j \ge Y_i}exp(h(X_j))}
+\]</div>
+<p>Treating the subjects as if they were statistically independent of each other, the joint probability of all realized events is the following partial likelihood, where the occurrence of the event is indicated by <span class="math notranslate nohighlight">\(C_i = 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[{\displaystyle L(\beta )=\prod _{i:C_{i}=1}L_{i}(\beta ).}\]</div>
+<p>The corresponding log partial likelihood is:</p>
+<div class="math notranslate nohighlight">
+\[\ell(\beta)=\sum_{i:C_i=1}(h(X_i) - log \sum_{j:Y_j \ge Y_i} exp(h(X_j)))\]</div>
+<p>This is the function we are trying to optimize via CatBoost.</p>
+</section>
+<section id="tweedie">
+<h2>4) Tweedie<a class="headerlink" href="#tweedie" title="Permalink to this heading">#</a></h2>
+<p>In insurance premium prediction problems, the total claim amount for a covered risk usually has a continuous distribution on positive values, except for the possibility of being exact zero when the claim does not occur. One standard approach in actuarial science in modeling such data is using compound Poisson models.</p>
+<section id="compound-poisson-distribution">
+<h3>Compound Poisson distribution<a class="headerlink" href="#compound-poisson-distribution" title="Permalink to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\( N \)</span> be a random variable with Poisson distribution and <span class="math notranslate nohighlight">\( Z_1, Z_2, ... \)</span> be independent identically distributed random variables with Gamma distribution. Define a random variable <span class="math notranslate nohighlight">\( Z \)</span> by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} Z = \begin{cases}0, &amp; \mbox{if}\ N = 0\\Z_1 + Z_2 + ... + Z_N, &amp; \mbox{if}\ N &gt; 0\end{cases} \end{split}\]</div>
+<p>The resulting distribution of <span class="math notranslate nohighlight">\( Z \)</span> is called compound Poisson distribution. In the case of insurance premium prediction <span class="math notranslate nohighlight">\( N \)</span> referres to the number of claims, <span class="math notranslate nohighlight">\( Z_i \)</span> reffers to the amount of <span class="math notranslate nohighlight">\(i\)</span>-th claim. Compound Poisson distribution is a special case of Tweedie model.</p>
+<p>Log-likelihood of compound Poisson distribution can be written as
+$<span class="math notranslate nohighlight">\( p(z) = \frac{1}{\phi}\left(z \frac{\mu^{1-\rho}}{1-\rho} - \frac{\mu^{2-\rho}}{2-\rho}\right) + a\)</span>$</p>
+<p>where <span class="math notranslate nohighlight">\( a, \phi, \mu \)</span> and <span class="math notranslate nohighlight">\( 1 &lt; \rho &lt; 2 \)</span> are some constants.</p>
+<p>We will apply Tweedie model to an auto insurance claim dataset analyzed in Yip, Yau (2005) and Zhou, Yang, Qian (2019).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">catboost</span> <span class="kn">import</span> <span class="n">CatBoostRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">boston</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Boston.csv&quot;</span><span class="p">)</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">boston</span><span class="p">[[</span><span class="s1">&#39;lstat&#39;</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">boston</span><span class="p">[</span><span class="s1">&#39;medv&#39;</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CatBoostRegressor</span><span class="p">(</span><span class="n">iterations</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "971adb6390394c6598b756749439683b"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean Absolute Error: </span><span class="si">{</span><span class="n">mae</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Root Mean Squared Error: </span><span class="si">{</span><span class="n">rmse</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 Score: 0.6352826772061222
+Mean Absolute Error: 3.592757001886408
+Root Mean Squared Error: 5.171663278344767
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Create a matplotlib figure and axis</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Seaborn regplot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">boston</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;lstat&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;medv&quot;</span><span class="p">,</span>
+            <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">},</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Boston linear regression&#39;</span><span class="p">)</span>
+
+<span class="c1"># Actual vs. Predicted scatter plot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Actual&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;MEDV&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;CatBoost Regression: Actual vs. Predicted&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4d75f4e247ed1ede91fda46dfd8a3d7598e6fba3f5ccd43ce3c9b319cd877f2e.png" src="_images/4d75f4e247ed1ede91fda46dfd8a3d7598e6fba3f5ccd43ce3c9b319cd877f2e.png" />
+</div>
+</div>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Optimization</p></th>
+<th class="head"><p>GPU support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MAE</p></td>
+<td><p>+</p></td>
+<td><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>RMSE</p></td>
+<td><p>+</p></td>
+<td><p>+</p></td>
+</tr>
+<tr class="row-even"><td><p>Poisson</p></td>
+<td><p>+</p></td>
+<td><p>+</p></td>
+</tr>
+<tr class="row-odd"><td><p>R2</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="notebook_catboost_metrics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Catboost metrics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="notebooks.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Content with notebooks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#description">Description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#popular-regression-models">Popular regression models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rmse">1) RMSE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poisson-model">2) Poisson model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#event-rate-lambda-as-dependent-variable">Event rate <span class="math notranslate nohighlight">\(\lambda\)</span> as dependent variable</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cox-proportional-model">3) Cox proportional model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tweedie">4) Tweedie</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compound-poisson-distribution">Compound Poisson distribution</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
